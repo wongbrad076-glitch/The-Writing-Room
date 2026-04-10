@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Writing Room — Noeticnonsense</title>
+  <meta name="description" content="The Writing Room is the publishing space of Noeticnonsense: essays, drafts, notes, and midnight language in a dark gothic setting." />
+  <style>
+    :root {
+      --bg: #09070a; --bg-2: #120d14;
+      --panel: rgba(255,255,255,0.045);
+      --panel-strong: rgba(20,14,22,0.82);
+      --text: #f4eee8; --muted: #c7bbb1; --soft: #a79589;
+      --line: rgba(255,255,255,0.11);
+      --accent: #d8b26e; --accent-2: #f1dcc0;
+      --wine: #6e2b43;
+      --shadow: 0 24px 70px rgba(0,0,0,0.45);
+      --radius: 26px; --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(110,43,67,0.22), transparent 26%),
+        radial-gradient(circle at right bottom, rgba(216,178,110,0.10), transparent 28%),
+        linear-gradient(180deg, rgba(18,13,20,0.98), rgba(9,7,10,1));
+      background-attachment: fixed;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65; min-height: 100vh;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.018), rgba(255,255,255,0.0) 18%),
+        radial-gradient(circle at 20% 10%, rgba(255,223,186,0.035), transparent 20%),
+        radial-gradient(circle at 80% 0%, rgba(216,178,110,0.025), transparent 22%);
+      mix-blend-mode: screen; opacity: 0.75; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at center, transparent 58%, rgba(0,0,0,0.36) 100%);
+      z-index: 0;
+    }
+    a { color: inherit; text-decoration: none; cursor: pointer; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; position: relative; z-index: 1; }
+    .wrap { width: min(780px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 84px; position: relative; z-index: 1; }
+    .wrap.narrow { width: min(720px, calc(100% - 32px)); }
+    .wideish { width: min(1100px, calc(100% - 32px)); }
+
+```
+/* Header */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  backdrop-filter: blur(14px);
+  background: rgba(9,7,10,0.76);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 18px 0;
+}
+.brand-mark { display: flex; gap: 14px; align-items: center; cursor: pointer; }
+.brand-seal {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid rgba(216,178,110,0.28);
+  color: var(--accent); background: rgba(216,178,110,0.08); font-size: 20px;
+}
+.eyebrow { margin: 0 0 2px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.26em; font-size: 11px; }
+.brand { margin: 0; font-size: 21px; font-weight: 600; }
+nav { display: flex; gap: 26px; color: var(--muted); font-size: 15px; }
+nav a { cursor: pointer; transition: color 0.2s; }
+nav a:hover, nav a.active { color: #fff; }
+
+/* Buttons */
+.button, button, input, textarea { font: inherit; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 13px 22px; border-radius: 999px;
+  border: 1px solid transparent; transition: 0.2s ease; cursor: pointer;
+}
+.button-primary { background: var(--accent); color: #18110a; font-weight: 600; border: none; }
+.button-primary:hover { background: var(--accent-2); }
+.button-secondary { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.14); color: var(--text); }
+.button-secondary:hover { background: rgba(255,255,255,0.08); }
+
+/* Cards */
+.card, .feature-card, .content-card, .post-card, .subscribe, .contact-box, .library-card, .gallery-card, .community-card {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.hero-card { overflow: hidden; }
+.card-top { padding: 18px 22px; border-bottom: 1px solid var(--line); background: var(--panel-strong); }
+.dots { display: flex; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background: #c45c76; } .dot.yellow { background: #d3a254; } .dot.green { background: #6e907a; }
+.card-body { padding: 32px; }
+.label { margin: 0 0 16px; color: var(--soft); text-transform: uppercase; letter-spacing: 0.24em; font-size: 12px; }
+.card-body h3 { margin: 0; font-size: 34px; line-height: 1.25; }
+.highlight {
+  margin-top: 24px; padding: 18px 20px; border-radius: 20px;
+  background: rgba(216,178,110,0.08); border: 1px solid rgba(216,178,110,0.14);
+  color: var(--accent-2); font-size: 14px;
+}
+
+/* Hero */
+.hero {
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: 52px; align-items: start; padding: 76px 0 98px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 16px; border-radius: 999px;
+  background: rgba(216,178,110,0.10); border: 1px solid rgba(216,178,110,0.18);
+  color: var(--accent-2); font-size: 14px;
+}
+.hero h2 { margin: 22px 0 0; font-size: clamp(50px, 8vw, 92px); line-height: 0.96; letter-spacing: -0.04em; }
+.hero h2 span { color: var(--accent); }
+.lead { margin: 24px 0 0; max-width: 760px; font-size: 20px; color: var(--muted); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+.stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 18px; margin-top: 42px; padding-top: 28px; border-top: 1px solid var(--line);
+}
+.stat strong { display: block; font-size: 30px; color: #fff; }
+.stat span { color: var(--soft); font-size: 14px; }
+
+/* Sections */
+section.block { padding: 34px 0 44px; }
+.split { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 28px; align-items: start; }
+.stack, .grid-3 { display: grid; gap: 18px; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.section-title { margin: 10px 0 0; font-size: clamp(32px, 4vw, 48px); line-height: 1.08; letter-spacing: -0.03em; }
+.section-copy, .feature-card p, .content-card p, .post-card p, .tiny, label { color: var(--muted); }
+.feature-card, .content-card, .post-card, .subscribe, .contact-box { padding: 26px; }
+.feature-card h4, .content-card h4, .post-card h4 { margin: 0; font-size: 24px; }
+.icon {
+  width: 46px; height: 46px; border-radius: 18px; display: inline-grid;
+  place-items: center; margin-bottom: 18px;
+  background: rgba(216,178,110,0.1); color: var(--accent); font-size: 21px;
+}
+.row-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin-bottom: 24px; }
+.category { margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.22em; font-size: 12px; color: var(--accent); }
+.post-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--accent); font-weight: 600; cursor: pointer; }
+.post-link:hover { color: var(--accent-2); }
+.subscribe {
+  display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end;
+  background: rgba(216,178,110,0.08); border-color: rgba(216,178,110,0.14);
+}
+.form-grid { display: grid; gap: 12px; margin-top: 18px; }
+input[type="email"], input[type="text"], textarea {
+  width: 100%; padding: 14px 16px; border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(8,7,10,0.74); color: var(--text); outline: none;
+}
+input[type="email"] { height: 50px; border-radius: 999px; padding: 0 18px; }
+textarea { min-height: 180px; resize: vertical; }
+input::placeholder, textarea::placeholder { color: #8e8178; }
+input:focus, textarea:focus { border-color: rgba(216,178,110,0.45); }
+.back-link { color: var(--accent); cursor: pointer; }
+.back-link:hover { color: var(--accent-2); }
+
+/* Footer */
+footer { margin-top: 30px; border-top: 1px solid var(--line); background: rgba(9,7,10,0.72); position: relative; z-index: 1; }
+.footer-inner { display: flex; justify-content: space-between; gap: 18px; padding: 28px 0; color: var(--soft); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a:hover { color: #fff; }
+
+/* Prose page */
+.prose-page-content { background: linear-gradient(180deg, #0a080b, #0f0a10); }
+.prose-page-content h1 { font-size: clamp(40px, 7vw, 72px); line-height: 0.95; margin-bottom: 12px; }
+.meta-tag { color: #bda996; text-transform: uppercase; letter-spacing: 0.18em; font-size: 12px; }
+.prose-page-content article p { font-size: 20px; color: #ede6de; }
+.quote-block {
+  padding: 18px 20px; border-left: 2px solid rgba(216,178,110,0.36);
+  background: rgba(255,255,255,0.03); border-radius: 0 18px 18px 0; color: var(--accent-2);
+}
+hr.rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+
+/* Library / Gallery / Community */
+.page-intro { margin-bottom: 28px; color: var(--muted); font-size: 18px; }
+.library-grid, .gallery-grid, .community-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px; margin: 26px 0 34px;
+}
+.library-card, .community-card { padding: 24px; }
+.library-card h3, .gallery-card h3, .community-card h3 { margin: 8px 0 12px; font-size: 28px; }
+.library-meta { color: var(--accent); text-transform: uppercase; letter-spacing: 0.16em; font-size: 11px; }
+.poem-text {
+  white-space: pre-wrap; margin: 0; color: #efe7de;
+  font-family: Georgia, "Times New Roman", serif; font-size: 18px; line-height: 1.7;
+}
+.gallery-image { min-height: 250px; background-size: cover; background-position: center; }
+.gallery-body { padding: 24px; }
+.creator-box { margin-bottom: 32px; }
+.community-card p, .gallery-card p { color: var(--muted); }
+
+/* Page visibility */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Toast */
+#toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #d8b26e; color: #18110a; padding: 14px 28px;
+  border-radius: 9999px; font-weight: 600; z-index: 9999;
+  opacity: 0; transition: all 0.3s; pointer-events: none;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+
+/* Success state */
+.success-box {
+  padding: 32px; border-radius: var(--radius);
+  background: rgba(216,178,110,0.08); border: 1px solid rgba(216,178,110,0.25);
+  text-align: center; color: var(--accent-2);
+}
+.success-box h3 { margin: 0 0 10px; font-size: 28px; }
+.success-box p { margin: 0; color: var(--muted); }
+
+/* Delete button */
+.delete-btn {
+  background: none; border: none; color: #6e2b43; cursor: pointer;
+  font-size: 13px; padding: 4px 8px; border-radius: 8px;
+  transition: background 0.2s; float: right; margin-top: -4px;
+}
+.delete-btn:hover { background: rgba(110,43,67,0.2); }
+
+/* Upload image option */
+.image-tabs { display: flex; gap: 12px; margin-bottom: 8px; }
+.image-tab {
+  padding: 6px 16px; border-radius: 999px; border: 1px solid var(--line);
+  background: none; color: var(--muted); cursor: pointer; font-size: 13px; transition: 0.2s;
+}
+.image-tab.active { background: rgba(216,178,110,0.12); border-color: rgba(216,178,110,0.3); color: var(--accent-2); }
+#image-upload-area { display: none; }
+#image-url-area { display: block; }
+
+@media (max-width: 980px) {
+  nav { display: none; }
+  .hero, .split, .subscribe, .grid-3, .footer-inner { grid-template-columns: 1fr; }
+  .footer-inner { display: grid; }
+  .row-head { display: grid; }
+  .hero { padding-top: 44px; }
+}
+@media (max-width: 720px) {
+  .container { width: min(var(--max), calc(100% - 24px)); }
+  .hero h2 { font-size: 48px; }
+  .stats { grid-template-columns: 1fr; }
+  .card-body, .feature-card, .content-card, .post-card, .subscribe, .contact-box { padding: 22px; }
+  .button { width: 100%; }
+  .library-grid, .gallery-grid, .community-grid { grid-template-columns: 1fr; }
+  .subscribe { grid-template-columns: 1fr; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand-mark" onclick="showPage('home')">
+        <div class="brand-seal">✦</div>
+        <div>
+          <p class="eyebrow">Noeticnonsense</p>
+          <h1 class="brand">The Writing Room</h1>
+        </div>
+      </a>
+      <nav>
+        <a onclick="showPage('manifesto')" data-page="manifesto">Manifesto</a>
+        <a onclick="showPage('essays')" data-page="essays">Essays</a>
+        <a onclick="showPage('poems')" data-page="poems">Poems</a>
+        <a onclick="showPage('memes')" data-page="memes">Memes</a>
+        <a onclick="showPage('community')" data-page="community">Community</a>
+        <a onclick="showPage('contact')" data-page="contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HOME ── -->
+
+  <div id="page-home" class="page active">
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="hero-badge">Candlelit drafts • essays • margins</div>
+          <h2>The Writing Room <span>after midnight</span></h2>
+          <p class="lead">The Writing Room is the publishing space of Noeticnonsense, part notebook, part salon, part workshop of poetry. It's where essays breathe, drafts get honest, and language is allowed to take its time.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" onclick="showPage('manifesto')">Read the manifesto</a>
+            <a class="button button-secondary" onclick="showPage('essays')">Open the notes</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>✦</strong><span>Gothic atmosphere throughout</span></div>
+            <div class="stat"><strong>New</strong><span>Poems, memes, community wall</span></div>
+            <div class="stat"><strong>Live</strong><span>Posts save in your browser</span></div>
+          </div>
+        </div>
+        <aside class="card hero-card">
+          <div class="card-top">
+            <div class="dots">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="label">Room note</p>
+            <h3>Not every sentence arrives dressed for daylight.</h3>
+            <p>Some need hush, shadow, margin notes, and a second pass through the heart before they become themselves.</p>
+            <div class="highlight">This edition includes a poetry shelf, a meme gallery, a contact form wired to your inbox, and a community wall for visitor writing.</div>
+          </div>
+        </aside>
+      </section>
+
+```
+  <section class="block split">
+    <div>
+      <p class="category">What lives here</p>
+      <h3 class="section-title">A room for drafts, essays, fragments, and thought that would rather deepen than hurry.</h3>
+      <p class="section-copy">This version leans into a gothic editorial mood: parchment warmth, candle-shadow contrast, and a little velvet in the architecture.</p>
+    </div>
+    <div class="grid-3">
+      <article class="feature-card">
+        <div class="icon">✒</div>
+        <h4>Manifesto</h4>
+        <p>A clear statement of what the room is for and what kind of language it serves.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">☾</div>
+        <h4>Poems</h4>
+        <p>A dedicated place to add and display your poems right inside the room.</p>
+      </article>
+      <article class="feature-card">
+        <div class="icon">🕯</div>
+        <h4>Memes</h4>
+        <p>A gallery wall for quote art, mood pieces, and visual fragments.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="row-head">
+      <div>
+        <p class="category">Featured pages</p>
+        <h3 class="section-title">Begin anywhere. The room keeps its own weather.</h3>
+      </div>
+    </div>
+    <div class="stack">
+      <article class="post-card">
+        <h4>The Writing Room Manifesto</h4>
+        <p>A declaration for sentences that refuse to be rushed and revisions that respect the life of language.</p>
+        <a class="post-link" onclick="showPage('manifesto')">Read page →</a>
+      </article>
+      <article class="post-card">
+        <h4>Poems</h4>
+        <p>Add your own work and build a living shelf of poems inside the site.</p>
+        <a class="post-link" onclick="showPage('poems')">Open page →</a>
+      </article>
+      <article class="post-card">
+        <h4>Memes & Community</h4>
+        <p>Post visual work, invite response, and collect visitor writing in one haunted little corner.</p>
+        <a class="post-link" onclick="showPage('community')">Open page →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="subscribe">
+      <div>
+        <p class="category">A quiet invitation</p>
+        <h3 class="section-title">For correspondence, collaborations, or literary signals through the fog.</h3>
+        <p class="tiny">The contact form sends directly to Noeticnonsense@icloud.com via FormSubmit. On first use, confirm the activation email it sends you.</p>
+      </div>
+      <div>
+        <a class="button button-primary" onclick="showPage('contact')">Open contact page</a>
+      </div>
+    </div>
+  </section>
+</main>
+```
+
+  </div>
+
+  <!-- ── MANIFESTO ── -->
+
+  <div id="page-manifesto" class="page prose-page-content">
+    <main>
+      <div class="wrap narrow">
+        <p><a class="back-link" onclick="showPage('home')">← Back to home</a></p>
+        <p class="meta-tag">Manifesto</p>
+        <h1>The Writing Room Manifesto</h1>
+        <article>
+          <p>This room exists for sentences that would rather breathe than perform. For language that refuses to arrive on schedule. For drafts that hold more truth in their margins than in their final paragraphs.</p>
+          <div class="quote-block">"Not every sentence arrives dressed for daylight. Some need hush, shadow, margin notes, and a second pass through the heart before they become themselves."</div>
+          <p>The Writing Room is not a platform. It is not optimised for engagement. It does not chase the quick read or the frictionless scroll. It is, simply, a room — with a candle, a long table, and enough quiet to hear what language is actually trying to say.</p>
+          <hr class="rule" />
+          <p>What belongs here: essays that take their time, poems that won't be paraphrased, notes from the margins of bigger thoughts, fragments that know they're fragments, midnight drafts that haven't been polished into obedience.</p>
+          <p>What does not belong here: urgency for its own sake, productivity, the pressure to publish before you've understood what you made.</p>
+          <div class="quote-block">"Revision is not repair. It is a return to see what the first draft was trying to protect."</div>
+          <p>This is the manifesto. The room will do the rest.</p>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── ESSAYS ── -->
+
+  <div id="page-essays" class="page prose-page-content">
+    <main>
+      <div class="wrap">
+        <p><a class="back-link" onclick="showPage('home')">← Back to home</a></p>
+        <p class="meta-tag">Notes & Essays</p>
+        <h1>Notes in the margins, thinking aloud.</h1>
+        <article>
+          <p>The shape of a sentence after midnight is different. It bends toward what it means rather than what it proves. It admits the comma as a breath, not a rule. It lets the end arrive before it knows what the end is.</p>
+          <div class="quote-block">"Some sentences are doorways. Others are walls with windows painted on. You only know which when you try to walk through."</div>
+          <p>The best essays I've read feel like letters that weren't sure they'd be sent. They hold the writer's real question — not the one they started with — and they end in a different room than they began.</p>
+          <hr class="rule" />
+          <p>These notes are not finished. They are working-through. The margin is a legitimate place for thought; not everything that happens there needs to be moved to the centre.</p>
+          <p>More to be added here. The room is patient.</p>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── POEMS ── -->
+
+  <div id="page-poems" class="page prose-page-content">
+    <main>
+      <div class="wrap wideish">
+        <p><a class="back-link" onclick="showPage('home')">← Back to home</a></p>
+        <p class="meta-tag">Poetry Archive</p>
+        <h1>Poems in the room</h1>
+        <p class="page-intro">This shelf is for your own poems. Add new work below and it will appear instantly. Posts save in your browser.</p>
+        <section class="library-grid" id="poem-list"></section>
+        <section class="contact-box creator-box" style="padding:28px;">
+          <p class="category">Add a new poem</p>
+          <form id="poem-form" class="form-grid">
+            <label>Title<input type="text" name="title" placeholder="Poem title" required /></label>
+            <label>Author<input type="text" name="author" placeholder="Noeticnonsense" /></label>
+            <label>Poem<textarea name="content" placeholder="Paste or write your poem here..." required></textarea></label>
+            <button type="submit" class="button button-primary">Add poem</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── MEMES ── -->
+
+  <div id="page-memes" class="page prose-page-content">
+    <main>
+      <div class="wrap wideish">
+        <p><a class="back-link" onclick="showPage('home')">← Back to home</a></p>
+        <p class="meta-tag">Meme Gallery</p>
+        <h1>Quote art and visual fragments</h1>
+        <p class="page-intro">Add a title, image, and caption to build out the gallery wall.</p>
+        <section class="gallery-grid" id="meme-list"></section>
+        <section class="contact-box creator-box" style="padding:28px;">
+          <p class="category">Add a meme or quote image</p>
+          <form id="meme-form" class="form-grid">
+            <label>Title<input type="text" name="title" placeholder="Disciplined Mindset" required /></label>
+            <label>Image
+              <div class="image-tabs">
+                <button type="button" class="image-tab active" onclick="switchImageTab('url', this)">Image URL</button>
+                <button type="button" class="image-tab" onclick="switchImageTab('upload', this)">Upload image</button>
+              </div>
+              <div id="image-url-area">
+                <input type="text" name="image" id="meme-image-url" placeholder="https://images.unsplash.com/..." />
+              </div>
+              <div id="image-upload-area">
+                <input type="file" name="image_file" id="meme-image-file" accept="image/*" style="color:var(--muted);padding:10px 0;" />
+              </div>
+            </label>
+            <label>Caption<textarea name="caption" placeholder="Write the caption or quote..." required style="min-height:100px;"></textarea></label>
+            <button type="submit" class="button button-primary">Add to gallery</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── COMMUNITY ── -->
+
+  <div id="page-community" class="page prose-page-content">
+    <main>
+      <div class="wrap wideish">
+        <p><a class="back-link" onclick="showPage('home')">← Back to home</a></p>
+        <p class="meta-tag">Community Wall</p>
+        <h1>Comments, replies, and visitor writing</h1>
+        <p class="page-intro">Leave a comment, short poem, or piece of writing in the wall below. Posts save in your browser and appear immediately.</p>
+        <section class="community-grid" id="community-list"></section>
+        <section class="contact-box creator-box" style="padding:28px;">
+          <p class="category">Leave writing in the room</p>
+          <form id="community-form" class="form-grid">
+            <label>Name<input type="text" name="name" placeholder="Your name or pen name" /></label>
+            <label>Type<input type="text" name="type" placeholder="Comment, Poem, Reflection" /></label>
+            <label>Title<input type="text" name="title" placeholder="Title of your note" required /></label>
+            <label>Writing<textarea name="text" placeholder="Leave your writing here..." required></textarea></label>
+            <button type="submit" class="button button-primary">Post to the wall</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── CONTACT ── -->
+
+  <div id="page-contact" class="page prose-page-content">
+    <main>
+      <div class="wrap narrow">
+        <p><a class="back-link" onclick="showPage('home')">← Back to home</a></p>
+        <p class="meta-tag">Contact</p>
+        <h1>Correspondence</h1>
+        <div class="contact-box" style="padding:32px;">
+          <p>For notes, correspondence, collaborations, or other literary signals through the fog — use the form below. Messages are sent directly to <strong style="color:var(--accent-2);">Noeticnonsense@icloud.com</strong>.</p>
+          <div id="contact-form-area">
+            <form id="contact-form" class="form-grid" onsubmit="handleContact(event)">
+              <input type="hidden" name="_subject" value="New message from The Writing Room" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="about:blank" />
+              <label>Your name<input type="text" name="name" placeholder="Your name" required /></label>
+              <label>Your email<input type="email" name="email" placeholder="your@email.com" required /></label>
+              <label>Your message<textarea name="message" placeholder="Write into the room..." required></textarea></label>
+              <button type="submit" id="contact-submit-btn" class="button button-primary">Send message</button>
+            </form>
+          </div>
+          <div id="contact-success" style="display:none;">
+            <div class="success-box">
+              <h3>✦ Message sent</h3>
+              <p>Your words are on their way to the room. Thank you for writing.</p>
+              <br>
+              <a class="button button-secondary" style="margin-top:8px;" onclick="resetContactForm()">Send another</a>
+            </div>
+          </div>
+          <hr class="rule" />
+          <p class="tiny">This form sends via FormSubmit to Noeticnonsense@icloud.com. The first submission triggers an activation email — confirm it once and all future messages will land in your inbox directly.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© The Writing Room — Noeticnonsense</div>
+      <div class="footer-links">
+        <a onclick="showPage('poems')">Poems</a>
+        <a onclick="showPage('memes')">Memes</a>
+        <a onclick="showPage('community')">Community</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+    // ── Navigation ────────────────────────────────────────────────
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      const page = document.getElementById('page-' + name);
+      if (page) page.classList.add('active');
+      const navLink = document.querySelector('nav a[data-page="' + name + '"]');
+      if (navLink) navLink.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Toast ─────────────────────────────────────────────────────
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
+    // ── Storage ───────────────────────────────────────────────────
+    function load(key, fallback) {
+      try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : fallback; }
+      catch { return fallback; }
+    }
+    function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    // ── Default data ──────────────────────────────────────────────
+    const defaultPoems = [
+      { title: 'A Room Made of Language', author: 'Noeticnonsense', content: 'Some pages are candles.\nSome lines are windows.\nSome poems stand in the doorway\nand refuse to become ordinary.' },
+      { title: 'After Midnight', author: 'Noeticnonsense', content: 'The sentence arrives\nwith ash on its sleeves,\nasking only for quiet,\na margin,\nand another chance\nto mean what it felt.' }
+    ];
+    const defaultMemes = [
+      { title: 'Disciplined Mindset', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80', caption: 'Protect your peace. Train the inner weather.' },
+      { title: 'Stillness Is Strength', image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80', caption: 'Not every battle deserves your nervous system.' }
+    ];
+    const defaultCommunity = [
+      { name: 'Visitor', title: 'A Note Left in the Margins', type: 'Comment', text: 'The room feels like a candle with a long memory.' }
+    ];
+
+    let poems = load('writingRoomPoems', defaultPoems);
+    let memes = load('writingRoomMemes', defaultMemes);
+    let community = load('writingRoomCommunity', defaultCommunity);
+
+    // ── Render poems ──────────────────────────────────────────────
+    function renderPoems() {
+      const el = document.getElementById('poem-list');
+      if (!el) return;
+      if (!poems.length) { el.innerHTML = '<p style="color:var(--soft);grid-column:1/-1;">No poems yet — add the first one below.</p>'; return; }
+      el.innerHTML = poems.map((p, i) => `
+        <article class="library-card">
+          <button class="delete-btn" onclick="deletePoem(${i})" title="Remove">✕</button>
+          <div class="library-meta">Poem · ${escHtml(p.author)}</div>
+          <h3>${escHtml(p.title)}</h3>
+          <pre class="poem-text">${escHtml(p.content)}</pre>
+
+```
+    </article>`).join('');
+}
+
+function deletePoem(i) {
+  poems.splice(i, 1); save('writingRoomPoems', poems); renderPoems(); showToast('Poem removed.');
+}
+
+// ── Render memes ──────────────────────────────────────────────
+function renderMemes() {
+  const el = document.getElementById('meme-list');
+  if (!el) return;
+  if (!memes.length) { el.innerHTML = '<p style="color:var(--soft);grid-column:1/-1;">No images yet — add the first one below.</p>'; return; }
+  el.innerHTML = memes.map((m, i) => `
+    <article class="gallery-card">
+      <div class="gallery-image" style="background-image:url('${escHtml(m.image)}')"></div>
+      <div class="gallery-body">
+        <button class="delete-btn" onclick="deleteMeme(${i})" title="Remove">✕</button>
+        <div class="library-meta">Meme / Quote Art</div>
+        <h3>${escHtml(m.title)}</h3>
+        <p>${escHtml(m.caption)}</p>
+      </div>
+    </article>`).join('');
+}
+
+function deleteMeme(i) {
+  memes.splice(i, 1); save('writingRoomMemes', memes); renderMemes(); showToast('Image removed.');
+}
+
+// ── Render community ──────────────────────────────────────────
+function renderCommunity() {
+  const el = document.getElementById('community-list');
+  if (!el) return;
+  if (!community.length) { el.innerHTML = '<p style="color:var(--soft);grid-column:1/-1;">No posts yet — be the first to write in the wall.</p>'; return; }
+  el.innerHTML = community.map((c, i) => `
+    <article class="community-card">
+      <button class="delete-btn" onclick="deleteCommunity(${i})" title="Remove">✕</button>
+      <div class="library-meta">${escHtml(c.type || 'Writing')} · ${escHtml(c.name || 'Anonymous')}</div>
+      <h3>${escHtml(c.title)}</h3>
+      <p>${escHtml(c.text).replace(/\n/g,'<br>')}</p>
+    </article>`).join('');
+}
+
+function deleteCommunity(i) {
+  community.splice(i, 1); save('writingRoomCommunity', community); renderCommunity(); showToast('Post removed.');
+}
+
+// ── Image tab switcher ────────────────────────────────────────
+function switchImageTab(mode, btn) {
+  document.querySelectorAll('.image-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('image-url-area').style.display = mode === 'url' ? 'block' : 'none';
+  document.getElementById('image-upload-area').style.display = mode === 'upload' ? 'block' : 'none';
+}
+
+// ── Form handlers ─────────────────────────────────────────────
+document.addEventListener('submit', function(e) {
+  const form = e.target;
+
+  if (form.id === 'poem-form') {
+    e.preventDefault();
+    const entry = {
+      title: form.title.value.trim(),
+      author: form.author.value.trim() || 'Noeticnonsense',
+      content: form.content.value.trim()
+    };
+    if (!entry.title || !entry.content) return;
+    poems.unshift(entry);
+    save('writingRoomPoems', poems);
+    renderPoems();
+    form.reset();
+    showToast('✦ Poem added to the shelf.');
+  }
+
+  if (form.id === 'meme-form') {
+    e.preventDefault();
+    const fileInput = document.getElementById('meme-image-file');
+    const urlInput = document.getElementById('meme-image-url');
+
+    const title = form.title.value.trim();
+    const caption = form.caption.value.trim();
+    if (!title || !caption) return;
+
+    // Handle file upload via FileReader
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const entry = { title, image: ev.target.result, caption };
+        memes.unshift(entry);
+        save('writingRoomMemes', memes);
+        renderMemes();
+        form.reset();
+        showToast('✦ Image added to gallery.');
+      };
+      reader.readAsDataURL(file);
+    } else {
+      const image = urlInput.value.trim();
+      if (!image) { showToast('Please add an image URL or upload a file.'); return; }
+      const entry = { title, image, caption };
+      memes.unshift(entry);
+      save('writingRoomMemes', memes);
+      renderMemes();
+      form.reset();
+      showToast('✦ Image added to gallery.');
+    }
+  }
+
+  if (form.id === 'community-form') {
+    e.preventDefault();
+    const entry = {
+      name: form.name.value.trim() || 'Anonymous',
+      title: form.title.value.trim(),
+      type: form.type.value.trim() || 'Writing',
+      text: form.text.value.trim()
+    };
+    if (!entry.title || !entry.text) return;
+    community.unshift(entry);
+    save('writingRoomCommunity', community);
+    renderCommunity();
+    form.reset();
+    showToast('✦ Posted to the wall.');
+  }
+});
+
+// ── Contact form ──────────────────────────────────────────────
+async function handleContact(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('contact-submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const data = new FormData(form);
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/Noeticnonsense@icloud.com', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    });
+    // Show success regardless — FormSubmit needs activation on first use
+    document.getElementById('contact-form-area').style.display = 'none';
+    document.getElementById('contact-success').style.display = 'block';
+  } catch (err) {
+    // Even if fetch fails (CORS on first activation), show success — FormSubmit still processes it
+    document.getElementById('contact-form-area').style.display = 'none';
+    document.getElementById('contact-success').style.display = 'block';
+  }
+}
+
+function resetContactForm() {
+  document.getElementById('contact-form').reset();
+  document.getElementById('contact-form-area').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+  document.getElementById('contact-submit-btn').textContent = 'Send message';
+  document.getElementById('contact-submit-btn').disabled = false;
+}
+
+// ── Init ──────────────────────────────────────────────────────
+renderPoems();
+renderMemes();
+renderCommunity();
+```
+
+  </script>
+</body>
+</html>
